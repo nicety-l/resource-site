@@ -1,1 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件资源 - 我的资源分享站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a:hover, nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .back-link {
+            margin-bottom: 1rem;
+        }
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .resource-list {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .resource-item {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem 0;
+        }
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        .resource-item h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .resource-item p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .download-links {
+            margin-bottom: 0.5rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .btn-baidu { background: #2932e1; }
+        .btn-ali { background: #ff6a00; }
+        .update-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+        .empty-message {
+            text-align: center;
+            color: #666;
+            padding: 3rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #333;
+            color: white;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>💻 软件资源</h1>
+        <nav>
+            <a href="index.html">首页</a>
+            <a href="software.html" class="active">软件资源</a>
+            <a href="courses.html">学习教程</a>
+            <a href="books.html">电子书籍</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="back-link">
+            <a href="index.html">← 返回首页</a>
+        </div>
+        
+        <div class="resource-list" id="resourceList">
+            <div class="empty-message">
+                <h3>正在加载资源...</h3>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2024 我的资源分享站 - 仅供学习交流使用</p>
+    </footer>
 
+    <script>
+        // 加载并显示资源数据
+        async function loadResources() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                displayResources(data.software);
+            } catch (error) {
+                document.getElementById('resourceList').innerHTML = `
+                    <div class="empty-message">
+                        <h3>加载资源失败</h3>
+                        <p>请检查 data.json 文件是否存在</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayResources(softwareList) {
+            const resourceList = document.getElementById('resourceList');
+            
+            if (!softwareList || softwareList.length === 0) {
+                resourceList.innerHTML = `
+                    <div class="empty-message">
+                        <h3>暂无软件资源</h3>
+                        <p>还没有添加任何软件资源</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<h2>软件资源列表</h2>';
+            
+            softwareList.forEach(resource => {
+                html += `
+                    <div class="resource-item">
+                        <h3>${resource.name}</h3>
+                        <p>${resource.description}</p>
+                        <div class="download-links">
+                            ${resource.baiduUrl ? `<a href="${resource.baiduUrl}" class="btn btn-baidu" target="_blank">百度网盘</a>` : ''}
+                            ${resource.aliUrl ? `<a href="${resource.aliUrl}" class="btn btn-ali" target="_blank">阿里云盘</a>` : ''}
+                        </div>
+                        <span class="update-time">${resource.code ? `提取码：${resource.code} | ` : ''}更新：${resource.updateTime}</span>
+                    </div>
+                `;
+            });
+            
+            resourceList.innerHTML = html;
+        }
+
+        // 页面加载时读取数据
+        document.addEventListener('DOMContentLoaded', loadResources);
+    </script>
+</body>
+</html>
