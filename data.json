@@ -1,1 +1,15 @@
-
+{
+  "software": [
+    {
+      "id": 1,
+      "name": "Visual Studio Code",
+      "description": "微软推出的免费代码编辑器，支持多种编程语言",
+      "baiduUrl": "https://pan.baidu.com/s/example1",
+      "aliUrl": "https://www.aliyundrive.com/s/example1",
+      "code": "vsc0",
+      "updateTime": "2024-01-20"
+    }
+  ],
+  "courses": [],
+  "books": []
+}
