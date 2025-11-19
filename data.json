@@ -2,14 +2,34 @@
   "software": [
     {
       "id": 1,
-      "name": "333333",
-      "description": "3333333",
-      "baiduUrl": "33333333",
-      "aliUrl": "333333333",
-      "code": "3333",
+      "name": "5555",
+      "description": "5555",
+      "baiduUrl": "5555",
+      "aliUrl": "5555",
+      "code": "5555",
       "updateTime": "2025-11-19"
     }
   ],
-  "courses": [],
-  "books": []
+  "courses": [
+    {
+      "id": 1,
+      "name": "2222",
+      "description": "222222",
+      "baiduUrl": "22222222",
+      "aliUrl": "222222222",
+      "code": "2222",
+      "updateTime": "2025-11-19"
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "name": "3333333",
+      "description": "33333333",
+      "baiduUrl": "333333333",
+      "aliUrl": "3333333",
+      "code": "3333",
+      "updateTime": "2025-11-19"
+    }
+  ]
 }
