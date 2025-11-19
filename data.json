@@ -1,29 +1,4 @@
 {
-  "software": [],
-  "courses": [
-    {
-      "id": 1,
-      "name": "11",
-      "description": "111111",
-      "baiduUrl": "11111111",
-      "aliUrl": "1111111",
-      "code": "1111",
-      "updateTime": "2025-11-19"
-    }
-  ],
-  "books": [
-    {
-      "id": 1,
-      "name": "222",
-      "description": "22222",
-      "baiduUrl": "2222222222222222",
-      "aliUrl": "2222222222",
-      "code": "2222",
-      "updateTime": "2025-11-19"
-    }
-  ]
-}
-{
   "software": [
     {
       "id": 1,
