@@ -23,3 +23,18 @@
     }
   ]
 }
+{
+  "software": [
+    {
+      "id": 1,
+      "name": "333333",
+      "description": "3333333",
+      "baiduUrl": "33333333",
+      "aliUrl": "333333333",
+      "code": "3333",
+      "updateTime": "2025-11-19"
+    }
+  ],
+  "courses": [],
+  "books": []
+}
