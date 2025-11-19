@@ -1,1 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的资源分享站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        nav {
+            margin-top: 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a:hover, nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .welcome {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .resource-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .latest-resources {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #333;
+            color: white;
+            margin-top: 3rem;
+        }
+        .hidden-admin {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .hidden-admin a {
+            color: #666;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 我的资源分享站</h1>
+        <nav>
+            <a href="index.html" class="active">首页</a>
+            <a href="software.html">软件资源</a>
+            <a href="courses.html">学习教程</a>
+            <a href="books.html">电子书籍</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="welcome">
+            <h2>欢迎来到我的资源分享站！</h2>
+            <p>这里分享各种实用的软件、教程和电子书资源</p>
+        </section>
+        
+        <section>
+            <h2 style="text-align: center; margin-bottom: 1rem;">资源分类</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3>💻 软件工具</h3>
+                    <p>精选实用软件和工具</p>
+                    <a href="software.html" class="btn">查看资源</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>🎓 学习教程</h3>
+                    <p>优质视频和文档教程</p>
+                    <a href="courses.html" class="btn">查看资源</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>📖 电子书籍</h3>
+                    <p>各类电子书和文档</p>
+                    <a href="books.html" class="btn">查看资源</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="latest-resources">
+            <h3 style="text-align: center;">最新资源</h3>
+            <div style="text-align: center; margin-top: 1rem;" id="latestResources">
+                <p>资源加载中...</p>
+            </div>
+        </section>
 
+        <!-- 隐藏的管理入口，普通用户不会注意 -->
+        <div class="hidden-admin">
+            <a href="admin.html">网站管理</a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2024 我的资源分享站 - 仅供学习交流使用</p>
+    </footer>
+
+    <script>
+        // 加载最新资源
+        async function loadLatestResources() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                updateLatestResources(data);
+            } catch (error) {
+                document.getElementById('latestResources').innerHTML = 
+                    '<p>暂无资源，请等待更新</p>';
+            }
+        }
+
+        function updateLatestResources(data) {
+            const container = document.getElementById('latestResources');
+            let html = '';
+            
+            // 显示软件资源
+            if (data.software && data.software.length > 0) {
+                data.software.slice(0, 3).forEach(resource => {
+                    html += `<p>${resource.name} - `;
+                    if (resource.baiduUrl) {
+                        html += `<a href="${resource.baiduUrl}" target="_blank">百度网盘</a> `;
+                    }
+                    if (resource.aliUrl) {
+                        html += `<a href="${resource.aliUrl}" target="_blank">阿里云盘</a>`;
+                    }
+                    html += `</p>`;
+                });
+            } else {
+                html = '<p>暂无资源，请等待更新</p>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // 页面加载时读取数据
+        document.addEventListener('DOMContentLoaded', loadLatestResources);
+    </script>
+</body>
+</html>
